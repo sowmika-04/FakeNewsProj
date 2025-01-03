@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictions - Misinformation Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        /* Container for the page */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* Heading */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        /* Prediction Cards */
+        .prediction-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .prediction-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        .prediction-header p {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .prediction-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #7f8c8d;
+        }
+
+        .prediction-content strong {
+            color: #2c3e50;
+        }
+
+        /* Trust Level Indicators */
+        .misleading {
+            color: #e74c3c;
+        }
+
+        .uncertain {
+            color: #f39c12;
+        }
+
+        .trustworthy {
+            color: #2ecc71;
+        }
+
+        /* Button to refresh or load more predictions */
+        .load-more-btn {
+            display: block;
+            width: 200px;
+            margin: 40px auto;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .load-more-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Latest Flagged Misinformation Predictions</h1>
+
+        {% for prediction in predictions %}
+            <div class="prediction-card">
+                <div class="prediction-header">
+                    <p><strong>URL:</strong> {{ prediction.url }}</p>
+                    <p><strong>Confidence Score:</strong> {{ prediction.fake_percentage }}%</p>
+                </div>
+                <div class="prediction-header">
+                    <p><strong>Trust Level:</strong> <span class="{{ prediction.trust_color }}">{{ prediction.trust_level }}</span></p>
+                </div>
+                <div class="prediction-content">
+                    <p><strong>Flagged Content:</strong> {{ prediction.content[:200] }}...</p>
+                    <p><strong>Timestamp:</strong> {{ prediction.timestamp }}</p>
+                </div>
+            </div>
+        {% endfor %}
+
+        <!-- Load More Predictions Button (if needed) -->
+        <button class="load-more-btn">Load More Predictions</button>
+    </div>
+
+</body>
+</html>
